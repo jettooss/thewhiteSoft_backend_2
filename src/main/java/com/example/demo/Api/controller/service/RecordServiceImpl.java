@@ -1,12 +1,10 @@
 package com.example.demo.Api.controller.service;
-
 import com.example.demo.Api.controller.dto.DtoData;
 import com.example.demo.Api.controller.dto.DtoUpdate;
 import com.example.demo.DataProcessor.RecordRepository;
 import com.example.demo.Model.Record;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
