@@ -1,4 +1,5 @@
 package com.example.demo.DataProcessor;
+
 import com.example.demo.Model.Record;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -21,7 +23,7 @@ public class RecordRepository {
     @Getter
     private final Map<Integer, Record> records;
     private final String filePath;
-    private  final String inputSavePath;
+    private final String inputSavePath;
 
     @Autowired
     public RecordRepository(@Value("${input.data.path}") String filePath, @Value("${input.save.path}") String inputSavePath) {
@@ -29,6 +31,7 @@ public class RecordRepository {
         this.inputSavePath = inputSavePath;
         this.records = loadRecordsFromJson();
     }
+
     public Map<Integer, Record> loadRecordsFromJson() {
         try {
             Map<Integer, Record> records = new HashMap<>();
@@ -49,22 +52,17 @@ public class RecordRepository {
             throw new RuntimeException("Failed to load records from dataPath: " + filePath, e);
         }
     }
-    public  boolean saveToJson(String name_file) throws IOException {
+
+    public boolean saveToJson(String name_file) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         List<Record> recordList = new ArrayList<>(records.values());
         objectMapper.writeValue(new File(inputSavePath + name_file + ".json"), recordList);
         System.out.println("Список записей успешно сохранен в JSON файл: " + name_file);
         return new File(inputSavePath + name_file + ".json").exists();
     }
+
     public Record getRecordById(Integer id) {
         return records.get(id);
     }
-    public Record getRecordByName(String name) {
-        for (Record record : records.values()) {
-            if (record.getName().equalsIgnoreCase(name)) {
-                return record;
-            }
-        }
-        return null;
-    }
+
 }
