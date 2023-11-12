@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -19,7 +18,6 @@ public class RecordServiceImpl implements RecordService {
     private final RecordRepository repository;
     private final AtomicInteger idCounter = new AtomicInteger(1);
 
-
     @Autowired
     public RecordServiceImpl(RecordRepository repository) {
         this.repository = repository;
@@ -28,7 +26,7 @@ public class RecordServiceImpl implements RecordService {
     public RecordResponseDto createRecord(RecordCreateDto createDto) {
         int id = getNextId();
         Record newRecord = new Record(id, createDto.getName(), createDto.getDescription(), createDto.getLink());
-        repository.getRecords().put(id, newRecord);
+        repository.save(newRecord);
         return convertToRecordResponseDto(newRecord);
     }
 
@@ -52,11 +50,11 @@ public class RecordServiceImpl implements RecordService {
     }
 
     public boolean deleteRecord(Integer id) {
-        return repository.getRecords().remove(id) != null;
+        return repository.deleteById(id);
     }
 
     public List<RecordResponseDto> getAllRecords(String name) {
-        List<Record> records = new ArrayList<>(repository.getRecords().values());
+        List<Record> records = new ArrayList<>(repository.getAllRecords());
 
         if (name != null && !name.isEmpty()) {
             records = records.stream().filter(record -> record.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
@@ -68,11 +66,12 @@ public class RecordServiceImpl implements RecordService {
     private RecordResponseDto convertToRecordResponseDto(Record record) {
         return new RecordResponseDto(record.getId(), record.getName(), record.getDescription(), record.getLink());
     }
+
     private RecordUpdateDto convertToRecordUpdateDto(Record record) {
         return new RecordUpdateDto(record.getName(), record.getDescription(), record.getLink());
     }
 
     private int getNextId() {
-        return idCounter.getAndIncrement();
+        return repository.getNextId();
     }
 }

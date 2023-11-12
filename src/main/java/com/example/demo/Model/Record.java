@@ -1,5 +1,4 @@
 package com.example.demo.Model;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
