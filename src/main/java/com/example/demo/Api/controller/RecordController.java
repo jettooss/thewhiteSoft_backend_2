@@ -1,15 +1,12 @@
 package com.example.demo.Api.controller;
-
 import com.example.demo.Api.NotFoundException;
-import com.example.demo.Api.controller.dto.DtoData;
-import com.example.demo.Api.controller.dto.DtoUpdate;
-import com.example.demo.Api.controller.service.RecordServiceImpl;
+import com.example.demo.Api.dto.DtoData;
+import com.example.demo.Api.service.RecordServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -50,8 +47,8 @@ public class RecordController {
 
     @Operation(description = "Обновление записи")
     @PutMapping("/update_{id}")
-    public ResponseEntity<DtoData> updateRecord(@PathVariable Integer id, @RequestBody DtoUpdate dtoUpdate) {
-        DtoData updatedDto = recordServiceImpl.updateRecord(id, dtoUpdate);
+    public ResponseEntity<DtoData> updateRecord(@PathVariable Integer id, @RequestBody DtoData dtoData) {
+        DtoData updatedDto = recordServiceImpl.updateRecord(id, dtoData);
         return handleNonNullDtoData(updatedDto);
 
     }

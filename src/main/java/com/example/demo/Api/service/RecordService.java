@@ -1,6 +1,6 @@
-package com.example.demo.Api.controller.service;
-import com.example.demo.Api.controller.dto.DtoData;
-import com.example.demo.Api.controller.dto.DtoUpdate;
+package com.example.demo.Api.service;
+//import com.example.demo.Api.dto.DtoData;
+import com.example.demo.Api.dto.*;
 import java.util.List;
 
 public interface RecordService {
@@ -8,7 +8,7 @@ public interface RecordService {
 
     DtoData getRecordById(Integer id);
 
-    DtoData updateRecord(Integer id, DtoUpdate dtoUpdate);
+    DtoData updateRecord(Integer id, DtoData dtoData);
 
     boolean deleteRecord(Integer id);
 
