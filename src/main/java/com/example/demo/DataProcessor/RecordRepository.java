@@ -53,18 +53,4 @@ public class RecordRepository {
         return records.get(id);
     }
 
-    public Record getRecordByName(String name) {
-        for (Record record : records.values()) {
-            if (record.getName().equalsIgnoreCase(name)) {
-                return record;
-            }
-        }
-        return null;
-    }
-
-    public void put(Record record) {
-        if (record != null) {
-            records.put(record.getId(), record);
-        }
-    }
 }
