@@ -12,4 +12,10 @@ public class DtoData {
     String name;
     String description;
     String link;
+
+    public DtoData(String name, String description, String link) {
+        this.name = name;
+        this.description = description;
+        this.link = link;
+    }
 }

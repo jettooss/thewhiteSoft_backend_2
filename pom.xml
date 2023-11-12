@@ -96,6 +96,13 @@
             <artifactId>spring-data-commons</artifactId>
             <version>3.1.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+<!--            <version>3.x.x</version>-->
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
     <build>
