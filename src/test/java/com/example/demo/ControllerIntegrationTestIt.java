@@ -15,7 +15,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class recordControllerIntegrationTestIt {
+class ControllerIntegrationTestIt {
 
 
     @Autowired
@@ -42,7 +42,7 @@ class recordControllerIntegrationTestIt {
         DtoData response = responseEntity.getBody();
 
         DtoData expectedDto = DtoData.builder()
-                .id(response.getId()) // Use the actual ID from the response
+                .id(response.getId())
                 .name("Name")
                 .description("Description")
                 .link("http://link.com")
@@ -75,8 +75,7 @@ class recordControllerIntegrationTestIt {
     void testUpdateRecord() {
         // Arrange
         DtoData material = createSampleDto();
-        DtoData createdDtoData = recordController.createRecord(material).getBody();  // Create a record for testing
-
+        DtoData createdDtoData = recordController.createRecord(material).getBody();
         // Act
         ResponseEntity<DtoData> responseEntity = recordController.updateRecord(createdDtoData.getId(), new DtoUpdate("UpdatedName", "UpdatedDescription", "UpdatedLink"));
 
@@ -88,7 +87,7 @@ class recordControllerIntegrationTestIt {
         assertThat(response)
                 .usingRecursiveComparison()
                 .isEqualTo(DtoData.builder()
-                        .id(response.getId()) /
+                        .id(response.getId())
 
                 .name("UpdatedName")
                 .description("UpdatedDescription")
@@ -100,10 +99,10 @@ class recordControllerIntegrationTestIt {
     void testDeleteRecord() {
         // Arrange
         DtoData material = createSampleDto();
-        DtoData createdDtoData = recordController.createRecord(material).getBody();  // Create a record for testing
+        DtoData createdDtoData = recordController.createRecord(material).getBody();
 
         // Act
-        ResponseEntity<Void> responseEntity = recordController.deleteRecord(createdDtoData.getId()); // Assuming ID 1 exists
+        ResponseEntity<Void> responseEntity = recordController.deleteRecord(createdDtoData.getId());
 
         // Assert
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);

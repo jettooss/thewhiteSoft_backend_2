@@ -4,6 +4,7 @@ import com.example.demo.Model.Record;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
 
 @Repository
 public class RecordRepository {
@@ -32,18 +33,17 @@ public class RecordRepository {
     public RecordRepository(@Value("${input.data.path}") String filePath, @Value("${input.save.path}") String inputSavePath) {
         this.filePath = filePath;
         this.inputSavePath = inputSavePath;
-        this.records = loadRecordsFromJson();
+        this.records = new ConcurrentHashMap<>(); // Инициализация пустого хранилища; данные будут загружены в @PostConstruct
     }
 
-    private Map<Integer, Record> loadRecordsFromJson() {
+    @PostConstruct
+    private void loadData() {
         try {
             List<Record> recordList = objectMapper.readValue(new File(filePath), new TypeReference<List<Record>>() {
             });
 
-            Map<Integer, Record> records = recordList.stream()
-                    .collect(Collectors.toMap(Record::getId, Function.identity()));
-
-            return records;
+            this.records.putAll(recordList.stream()
+                    .collect(Collectors.toMap(Record::getId, Function.identity())));
         } catch (IOException e) {
             throw new RuntimeException("Failed to load records from dataPath: " + filePath, e);
         }
@@ -65,7 +65,6 @@ public class RecordRepository {
     public void put(Record record) {
         if (record != null) {
             records.put(record.getId(), record);
-
         }
     }
 }
