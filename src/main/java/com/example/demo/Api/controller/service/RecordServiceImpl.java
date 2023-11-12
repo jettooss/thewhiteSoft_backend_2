@@ -1,6 +1,5 @@
 package com.example.demo.Api.controller.service;
 import com.example.demo.Api.controller.dto.DtoData;
-import com.example.demo.Api.controller.dto.DtoUpdate;
 import com.example.demo.DataProcessor.RecordRepository;
 import com.example.demo.Model.Record;
 import org.springframework.stereotype.Service;
@@ -36,13 +35,13 @@ public class RecordServiceImpl implements RecordService {
         }
     }
 
-    public DtoData updateRecord(Integer id, DtoUpdate dtoUpdate) {
+    public DtoData updateRecord(Integer id, DtoData dtoData) {
         Record existingRecord = repository.getRecordById(id);
 
         if (existingRecord != null) {
-            existingRecord.setName(dtoUpdate.getName());
-            existingRecord.setDescription(dtoUpdate.getDescription());
-            existingRecord.setLink(dtoUpdate.getLink());
+            existingRecord.setName(dtoData.getName());
+            existingRecord.setDescription(dtoData.getDescription());
+            existingRecord.setLink(dtoData.getLink());
 
             return convertToDtoData(existingRecord);
         } else {

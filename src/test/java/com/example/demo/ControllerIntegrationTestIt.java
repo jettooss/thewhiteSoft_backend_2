@@ -1,7 +1,6 @@
 package com.example.demo;
 import com.example.demo.Api.controller.RecordController;
 import com.example.demo.Api.controller.dto.DtoData;
-import com.example.demo.Api.controller.dto.DtoUpdate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -77,7 +76,7 @@ class ControllerIntegrationTestIt {
         DtoData material = createSampleDto();
         DtoData createdDtoData = recordController.createRecord(material).getBody();
         // Act
-        ResponseEntity<DtoData> responseEntity = recordController.updateRecord(createdDtoData.getId(), new DtoUpdate("UpdatedName", "UpdatedDescription", "UpdatedLink"));
+        ResponseEntity<DtoData> responseEntity = recordController.updateRecord(createdDtoData.getId(), new DtoData("UpdatedName", "UpdatedDescription", "UpdatedLink"));
 
         // Assert
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
