@@ -1,5 +1,7 @@
 package com.example.demo.Api.service;
-import com.example.demo.Api.dto.DtoData;
+import com.example.demo.Api.dto.RecordDto.RecordCreateDto;
+import com.example.demo.Api.dto.RecordDto.RecordResponseDto;
+import com.example.demo.Api.dto.RecordDto.RecordUpdateDto;
 import com.example.demo.repository.RecordRepository;
 import com.example.demo.Model.Record;
 import org.springframework.stereotype.Service;
@@ -8,42 +10,42 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.concurrent.atomic.AtomicInteger;
+
 
 
 @Service
 public class RecordServiceImpl implements RecordService {
     private final RecordRepository repository;
+    private final AtomicInteger idCounter = new AtomicInteger(1);
+
 
     @Autowired
     public RecordServiceImpl(RecordRepository repository) {
         this.repository = repository;
     }
 
-    public DtoData createRecord(DtoData dtoData) {
-        int id = generateUniqueID();
-        Record newRecord = new Record(id, dtoData.getName(), dtoData.getDescription(), dtoData.getLink());
+    public RecordResponseDto createRecord(RecordCreateDto createDto) {
+        int id = getNextId();
+        Record newRecord = new Record(id, createDto.getName(), createDto.getDescription(), createDto.getLink());
         repository.getRecords().put(id, newRecord);
-        return convertToDtoData(newRecord);
+        return convertToRecordResponseDto(newRecord);
     }
 
-    public DtoData getRecordById(Integer id) {
+    public RecordResponseDto getRecordById(Integer id) {
         Record record = repository.getRecordById(id);
-        if (record != null) {
-            return convertToDtoData(record);
-        } else {
-            return null;
-        }
+        return record != null ? convertToRecordResponseDto(record) : null;
     }
 
-    public DtoData updateRecord(Integer id, DtoData dtodata) {
+    public RecordUpdateDto updateRecord(Integer id, RecordUpdateDto updateDto) {
         Record existingRecord = repository.getRecordById(id);
 
         if (existingRecord != null) {
-            existingRecord.setName(dtodata.getName());
-            existingRecord.setDescription(dtodata.getDescription());
-            existingRecord.setLink(dtodata.getLink());
+            existingRecord.setName(updateDto.getName());
+            existingRecord.setDescription(updateDto.getDescription());
+            existingRecord.setLink(updateDto.getLink());
 
-            return convertToDtoData(existingRecord);
+            return convertToRecordUpdateDto(existingRecord);
         } else {
             return null;
         }
@@ -53,26 +55,24 @@ public class RecordServiceImpl implements RecordService {
         return repository.getRecords().remove(id) != null;
     }
 
-
-    public List<DtoData> getAllRecords(String name) {
+    public List<RecordResponseDto> getAllRecords(String name) {
         List<Record> records = new ArrayList<>(repository.getRecords().values());
 
         if (name != null && !name.isEmpty()) {
             records = records.stream().filter(record -> record.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
         }
 
-        return records.stream().map(this::convertToDtoData).collect(Collectors.toList());
+        return records.stream().map(this::convertToRecordResponseDto).collect(Collectors.toList());
     }
 
-    private DtoData convertToDtoData(Record record) {
-        return new DtoData(record.getId(), record.getName(), record.getDescription(), record.getLink());
+    private RecordResponseDto convertToRecordResponseDto(Record record) {
+        return new RecordResponseDto(record.getId(), record.getName(), record.getDescription(), record.getLink());
+    }
+    private RecordUpdateDto convertToRecordUpdateDto(Record record) {
+        return new RecordUpdateDto(record.getName(), record.getDescription(), record.getLink());
     }
 
-    private int generateUniqueID() {
-
-        Random rand = new Random();
-        int uniqueID = rand.nextInt(100000);
-        return uniqueID;
-
+    private int getNextId() {
+        return idCounter.getAndIncrement();
     }
 }

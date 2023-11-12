@@ -10,7 +10,6 @@ import lombok.*;
 @AllArgsConstructor
 public class DtoRating {
     int id;
-    int recordId;
     int rating;
     String comment;
 }

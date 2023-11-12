@@ -1,17 +1,19 @@
 package com.example.demo.Api.service;
-//import com.example.demo.Api.dto.DtoData;
-import com.example.demo.Api.dto.*;
+import com.example.demo.Api.dto.RecordDto.RecordCreateDto;
+import com.example.demo.Api.dto.RecordDto.RecordResponseDto;
+import com.example.demo.Api.dto.RecordDto.RecordUpdateDto;
+
 import java.util.List;
 
 public interface RecordService {
-    DtoData createRecord(DtoData dtoData);
 
-    DtoData getRecordById(Integer id);
+    RecordResponseDto createRecord(RecordCreateDto createDto);
 
-    DtoData updateRecord(Integer id, DtoData dtoData);
+    RecordResponseDto getRecordById(Integer id);
+
+    RecordUpdateDto updateRecord(Integer id, RecordUpdateDto updateDto);
 
     boolean deleteRecord(Integer id);
 
-
-    List<DtoData> getAllRecords(String name);
+    List<RecordResponseDto> getAllRecords(String name);
 }
