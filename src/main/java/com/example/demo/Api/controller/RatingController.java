@@ -1,5 +1,4 @@
 package com.example.demo.Api.controller;
-
 import com.example.demo.Api.dto.DtoRating;
 import com.example.demo.Api.service.RatingService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -8,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/ratings")

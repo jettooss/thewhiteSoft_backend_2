@@ -1,5 +1,4 @@
 package com.example.demo.repository;
-
 import com.example.demo.Model.Record;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,7 +7,6 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -16,6 +14,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 
 @Repository
 public class RecordRepository {
