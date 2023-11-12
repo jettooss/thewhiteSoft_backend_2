@@ -1,20 +1,14 @@
 package com.example.demo.DataProcessor;
-
 import com.example.demo.Model.Record;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,7 +27,7 @@ public class RecordRepository {
     public RecordRepository(@Value("${input.data.path}") String filePath, @Value("${input.save.path}") String inputSavePath) {
         this.filePath = filePath;
         this.inputSavePath = inputSavePath;
-        this.records = new ConcurrentHashMap<>(); // Инициализация пустого хранилища; данные будут загружены в @PostConstruct
+        this.records = new ConcurrentHashMap<>();
     }
 
     @PostConstruct
