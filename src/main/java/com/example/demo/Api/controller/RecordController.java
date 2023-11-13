@@ -1,82 +1,66 @@
 package com.example.demo.Api.controller;
 import com.example.demo.Api.NotFoundException;
-import com.example.demo.Api.controller.dto.DtoData;
-import com.example.demo.Api.controller.service.RecordServiceImpl;
+import com.example.demo.Api.dto.RecordDto.RecordCreateDto;
+import com.example.demo.Api.dto.RecordDto.RecordResponseDto;
+import com.example.demo.Api.dto.RecordDto.RecordUpdateDto;
+import com.example.demo.Api.mapper.RecordMapper;
+import com.example.demo.Api.service.RecordService;
+import com.example.demo.Model.argument.CreateArgument;
+import com.example.demo.Model.argument.UpdateArgument;
+import com.example.demo.Model.Record;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
-@RequestMapping(value = "api/records")
+@RequestMapping("api/records")
+@RequiredArgsConstructor
 public class RecordController {
-    private final RecordServiceImpl recordServiceImpl;
 
-    @Autowired
-    public RecordController(RecordServiceImpl recordServiceImpl) {
-        this.recordServiceImpl = recordServiceImpl;
+    private final RecordService recordService;
+    private final RecordMapper recordMapper;
+
+
+    @PostMapping("{id}/create")
+    @Operation(description = "Создать запись")
+    public RecordResponseDto create(@RequestBody RecordCreateDto dto) {
+        CreateArgument argument = recordMapper.toCreateArgument(dto);
+        return recordMapper.toDto(recordService.createRecord(argument));
     }
 
-    @Operation(description = "Добавление записи")
-    @PostMapping("/create")
-    public ResponseEntity<DtoData> createRecord(@RequestBody DtoData dtoData) {
-        DtoData createdDto = recordServiceImpl.createRecord(dtoData);
-        return new ResponseEntity<>(createdDto, HttpStatus.CREATED);
-    }
 
+    @PostMapping("{id}/update")
+    @Operation(description = "Изменить запись по ID")
+    public ResponseEntity<RecordResponseDto> updateByID(@PathVariable("id") Integer id, @RequestBody RecordUpdateDto dto) {
+        UpdateArgument argument = recordMapper.toUpdateArgument(dto);
+        Optional<Record> updatedRecord = recordService.updateRecord(id, argument);
+
+        return updatedRecord
+                .map(recordMapper::toDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
     @GetMapping("/all")
-    @Operation(description = "Все записи с возможностью поиска по наименованию")
-    public ResponseEntity<List<DtoData>> getAllRecords(@RequestParam(required = false) String name) {
-        List<DtoData> dtos = recordServiceImpl.getAllRecords(name);
-        return handleNonNullDtoDataList(dtos);
-
-
+    @Operation(description = "Получить все записи")
+    public List<RecordResponseDto> getAllRecords(@RequestParam(required = false) String name) {
+        List<RecordResponseDto> dtos = recordMapper.toDtoList(recordService.getAllRecords(name));
+        return dtos;
     }
 
-    @Operation(description = "Получение по ID")
-    @GetMapping("{id}")
-    public ResponseEntity<DtoData> getRecordById(@PathVariable Integer id) {
-        DtoData dtoData = recordServiceImpl.getRecordById(id);
-        return handleNonNullDtoData(dtoData);
-
-    }
-
-
-    @Operation(description = "Обновление записи")
-    @PutMapping("/update_{id}")
-    public ResponseEntity<DtoData> updateRecord(@PathVariable Integer id, @RequestBody DtoData dtoUpdate) {
-        DtoData updatedDto = recordServiceImpl.updateRecord(id, dtoUpdate);
-        return handleNonNullDtoData(updatedDto);
-
-    }
-
-    @Operation(description = "Удаление по ID")
-    @DeleteMapping("/delete_{id}")
+    @DeleteMapping("/{id}/delete")
+    @Operation(description = "Удалить запись по ID")
     public ResponseEntity<Void> deleteRecord(@PathVariable Integer id) {
-        boolean deleted = recordServiceImpl.deleteRecord(id);
+        boolean deleted = recordService.deleteRecord(id);
         if (deleted) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            throw new NotFoundException("Запись не найдена: " + id);
+            throw new NotFoundException("id не найдено : " + id);
         }
     }
 
-    private ResponseEntity<DtoData> handleNonNullDtoData(DtoData dtoData) {
-        if (dtoData != null) {
-            return new ResponseEntity<>(dtoData, HttpStatus.OK);
-        } else {
-            throw new NotFoundException("не найдено");
-        }
-    }
-
-    private ResponseEntity<List<DtoData>> handleNonNullDtoDataList(List<DtoData> dtoDataList) {
-        if (dtoDataList != null && !dtoDataList.isEmpty()) {
-            return new ResponseEntity<>(dtoDataList, HttpStatus.OK);
-        } else {
-            throw new NotFoundException("не найдено");
-        }
-    }
 }
