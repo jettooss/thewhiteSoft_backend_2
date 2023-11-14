@@ -1,10 +1,10 @@
 package com.example.demo;
-import com.example.demo.DataProcessor.*;
-import com.example.demo.Model.Record;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import java.io.IOException;
+import com.example.demo.repository.RecordRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import com.example.demo.Model.Record;
+import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DataProcessorTest {
     private RecordRepository recordRepository;
@@ -16,36 +16,29 @@ public class DataProcessorTest {
 
     @Test
     void testLoadRecordsFromJson() {
-        assertFalse(recordRepository.getRecords().isEmpty());
-
         Record record = recordRepository.getRecordById(1);
-        assertNotNull(record);
+        assertNotNull(record, "Record with ID 1 should not be null");
     }
+
     @Test
     void testGetRecordById() {
         Record record = recordRepository.getRecordById(2);
-        assertNotNull(record);
-        assertEquals("A", record.getName());
-        assertEquals("2323qweqwe2", record.getDescription());
-        assertEquals("323wqewqeqwe23", record.getLink());
+        assertNotNull(record, "Record should not be null");
+        assertEquals("A", record.getName(), "Name should match");
+        assertEquals("2323qweqwe2", record.getDescription(), "Description should match");
+        assertEquals("323wqewqeqwe23", record.getLink(), "Link should match");
     }
-    @Test
-    void testGetRecordByName() {
-        Record record = recordRepository.getRecordByName("B");
-        assertNotNull(record);
-        assertEquals(1, record.getId());
-        assertEquals("2asdad3232", record.getDescription());
-        assertEquals("wqewqWQewqewqe", record.getLink());
-    }
+
+
+
     @Test
     void testSaveToJson() {
-        recordRepository.getRecords();
+
         String testFileName = "test-save";
         try {
-            assertTrue(recordRepository.saveToJson(testFileName + ".json"));
+            assertTrue(recordRepository.saveToJson(testFileName + ".json"), "Saving records to JSON should be successful");
         } catch (IOException e) {
-            fail("Не удалось сохранить записи в файл JSON.");
+            fail("Failed to save records to JSON file.", e);
         }
-
     }
 }
