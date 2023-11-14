@@ -1,12 +1,12 @@
 package com.example.demo.Api.controller;
-import com.example.demo.Api.NotFoundException;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.Api.dto.RecordDto.RecordCreateDto;
 import com.example.demo.Api.dto.RecordDto.RecordResponseDto;
 import com.example.demo.Api.dto.RecordDto.RecordUpdateDto;
 import com.example.demo.Api.mapper.RecordMapper;
-import com.example.demo.Api.service.RecordService;
-import com.example.demo.Model.argument.CreateArgument;
-import com.example.demo.Model.argument.UpdateArgument;
+import com.example.demo.service.RecordService;
+import com.example.demo.service.argument.CreateArgument;
+import com.example.demo.service.argument.UpdateArgument;
 import com.example.demo.Model.Record;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +45,7 @@ public class RecordController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
     @GetMapping("/all")
     @Operation(description = "Получить все записи")
     public List<RecordResponseDto> getAllRecords(@RequestParam(required = false) String name) {

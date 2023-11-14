@@ -1,5 +1,4 @@
 package com.example.demo.repository;
-
 import com.example.demo.Model.Record;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +18,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
-@Component
+@Repository
+
 public class RecordRepository {
     private final Map<Integer, Record> records;
     private final String filePath;
@@ -61,6 +61,8 @@ public class RecordRepository {
         int nextId = getNextId();
         record.setId(nextId);
         records.put(nextId, record);
+//        System.out.println(records);
+
         return record;
     }
 

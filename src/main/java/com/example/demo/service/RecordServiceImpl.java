@@ -1,31 +1,31 @@
-package com.example.demo.Api.service;
-import com.example.demo.Model.argument.CreateArgument;
-import com.example.demo.Model.argument.UpdateArgument;
+package com.example.demo.service;
+import com.example.demo.service.argument.CreateArgument;
+import com.example.demo.service.argument.UpdateArgument;
 import com.example.demo.repository.RecordRepository;
 import com.example.demo.Model.Record;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
-public class RecordServiceImpl implements RecordService {
 
+@Service
+@RequiredArgsConstructor
+public class RecordServiceImpl implements RecordService {
 
     private final RecordRepository repository;
 
-    public RecordServiceImpl(RecordRepository repository) {
-        this.repository = repository;
-    }
-
     @Override
-    public Record createRecord(CreateArgument record) {
-        Record newRecord = new Record(1, record.getName(), record.getDescription(), record.getLink());
-        return repository.save(newRecord);
+    public Record createRecord(CreateArgument argument) {
+        Record rating = Record.builder()
+                .name(argument.getName())
+                .description(argument.getDescription())
+                .link(argument.getLink())
+                .build();
+        return repository.save(rating);
     }
-
-
 
     public Optional<Record> updateRecord(Integer id, UpdateArgument argument) {
         Record existingRecord = repository.getRecordById(id);

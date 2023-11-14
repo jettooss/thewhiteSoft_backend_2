@@ -1,9 +1,5 @@
 package com.example.demo.Model;
-
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 
@@ -14,22 +10,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Rating {
-    private static int idCounter = 1; // Добавьте счетчик id
 
     private int id;
 
-    @Min(1)
-    @Max(5)
-    private int rating;
+    @Min(value = 1, message = "Оценка должна быть не меньше 1")
+    @Max(value = 5, message = "Оценка должна быть не больше 5")
+    private int value;
 
-    @NotNull
-    @Size(max = 64)
+    @NotBlank(message = "Комментарий не может быть пустым")
     private String comment;
-
-    // Добавьте конструктор для установки уникального id
-//    public Rating(int rating, String comment) {
-//        this.id = idCounter++;
-//        this.rating = rating;
-//        this.comment = comment;
-//    }
 }
