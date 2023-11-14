@@ -1,12 +1,14 @@
 package com.example.demo.repository;
+
 import com.example.demo.Model.Record;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
-@Repository
+@Component
 public class RecordRepository {
     private final Map<Integer, Record> records;
     private final String filePath;
@@ -28,7 +30,7 @@ public class RecordRepository {
     public RecordRepository(@Value("${input.data.path}") String filePath, @Value("${input.save.path}") String inputSavePath) {
         this.filePath = filePath;
         this.inputSavePath = inputSavePath;
-        this.records = new ConcurrentHashMap<>(); // Инициализация пустого хранилища; данные будут загружены в @PostConstruct
+        this.records = new ConcurrentHashMap<>();
         loadData();
     }
 
@@ -43,6 +45,7 @@ public class RecordRepository {
             throw new RuntimeException("Failed to load records from dataPath: " + filePath, e);
         }
     }
+
     public boolean saveToJson(String name_file) throws IOException {
         List<Record> recordList = new ArrayList<>(records.values());
         objectMapper.writeValue(new File(inputSavePath + name_file + ".json"), recordList);
@@ -56,6 +59,13 @@ public class RecordRepository {
 
     public Record save(Record record) {
         int nextId = getNextId();
+        record.setId(nextId);
+        records.put(nextId, record);
+        return record;
+    }
+
+    public Record update(Record record) {
+        int nextId = record.getId();
         record.setId(nextId);
         records.put(nextId, record);
         return record;
@@ -76,12 +86,5 @@ public class RecordRepository {
 
         return maxId + 1;
     }
-    public Record getRecordByName(String name) {
-        for (Record record : records.values()) {
-            if (record.getName().equalsIgnoreCase(name)) {
-                return record;
-            }
-        }
-        return null;
-    }
+
 }

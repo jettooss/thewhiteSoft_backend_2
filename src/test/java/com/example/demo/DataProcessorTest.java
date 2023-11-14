@@ -29,14 +29,7 @@ public class DataProcessorTest {
         assertEquals("323wqewqeqwe23", record.getLink(), "Link should match");
     }
 
-    @Test
-    void testGetRecordByName() {
-        Record record = recordRepository.getRecordByName("B");
-        assertNotNull(record, "Record should not be null");
-        assertEquals(1, record.getId(), "ID should match");
-        assertEquals("2asdad3232", record.getDescription(), "Description should match");
-        assertEquals("wqewqWQewqewqe", record.getLink(), "Link should match");
-    }
+
 
     @Test
     void testSaveToJson() {

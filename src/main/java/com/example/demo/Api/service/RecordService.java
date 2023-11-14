@@ -1,19 +1,20 @@
 package com.example.demo.Api.service;
-import com.example.demo.Api.dto.RecordDto.RecordCreateDto;
-import com.example.demo.Api.dto.RecordDto.RecordResponseDto;
-import com.example.demo.Api.dto.RecordDto.RecordUpdateDto;
-
+import com.example.demo.Model.argument.CreateArgument;
+import com.example.demo.Model.argument.UpdateArgument;
+import com.example.demo.Model.Record;
 import java.util.List;
+import java.util.Optional;
+
 
 public interface RecordService {
+    Record createRecord(CreateArgument record);
 
-    RecordResponseDto createRecord(RecordCreateDto createDto);
 
-    RecordResponseDto getRecordById(Integer id);
-
-    RecordUpdateDto updateRecord(Integer id, RecordUpdateDto updateDto);
+    Optional<Record> updateRecord(Integer id, UpdateArgument record);
 
     boolean deleteRecord(Integer id);
 
-    List<RecordResponseDto> getAllRecords(String name);
+    List<Record> getAllRecords(String name);
+    Record searchByID(Integer id);
+
 }
