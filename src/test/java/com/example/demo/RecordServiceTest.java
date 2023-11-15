@@ -1,8 +1,9 @@
 package com.example.demo;
-import com.example.demo.Api.service.RecordServiceImpl;
-import com.example.demo.Model.argument.CreateArgument;
-import com.example.demo.Model.argument.UpdateArgument;
+import com.example.demo.service.RatingServiceImpl;
+import com.example.demo.service.argument.CreateArgument;
+import com.example.demo.service.argument.UpdateArgument;
 import com.example.demo.repository.RecordRepository;
+import com.example.demo.service.RecordServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;

@@ -5,8 +5,6 @@ import com.example.demo.Api.dto.RecordDto.RecordResponseDto;
 import com.example.demo.Api.dto.RecordDto.RecordUpdateDto;
 import com.example.demo.Api.mapper.RecordMapper;
 import com.example.demo.service.RecordService;
-import com.example.demo.service.argument.CreateArgument;
-import com.example.demo.service.argument.UpdateArgument;
 import com.example.demo.Model.Record;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
+import com.example.demo.service.argument.CreateArgument;
+import com.example.demo.service.argument.UpdateArgument;
 
 
 @RestController

@@ -16,6 +16,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
+
 @Component
 public class RecordRepository {
     private final Map<Integer, Record> records;
@@ -28,9 +29,9 @@ public class RecordRepository {
         this.filePath = filePath;
         this.inputSavePath = inputSavePath;
         this.records = new ConcurrentHashMap<>();
-        loadData();
     }
 
+    @PostConstruct
     private void loadData() {
         try {
             List<Record> recordList = objectMapper.readValue(new File(filePath), new TypeReference<List<Record>>() {

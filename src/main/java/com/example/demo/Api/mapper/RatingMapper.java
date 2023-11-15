@@ -12,6 +12,6 @@ public interface RatingMapper {
 
     RatingCreateArgument toCreateArgument(RatingCreateDto dto);
 
-    RatingResponseDto toRatingResponseDto(Rating dto); // Add this method
+    RatingResponseDto toRatingResponseDto(Rating dto);
 
 }

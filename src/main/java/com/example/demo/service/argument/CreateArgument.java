@@ -1,4 +1,4 @@
-package com.example.demo.Model.argument;
+package com.example.demo.service.argument;
 import lombok.*;
 
 

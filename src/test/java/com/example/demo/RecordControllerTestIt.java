@@ -2,7 +2,7 @@ package com.example.demo;
 import com.example.demo.Api.dto.RecordDto.RecordCreateDto;
 import com.example.demo.Api.dto.RecordDto.RecordResponseDto;
 import com.example.demo.Api.dto.RecordDto.RecordUpdateDto;
-import com.example.demo.Api.service.RecordService;
+import com.example.demo.service.RecordService;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.*;
@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import java.util.List;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

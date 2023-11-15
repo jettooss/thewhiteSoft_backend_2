@@ -1,6 +1,6 @@
-package com.example.demo.Api.service;
-import com.example.demo.Model.argument.CreateArgument;
-import com.example.demo.Model.argument.UpdateArgument;
+package com.example.demo.service;
+import com.example.demo.service.argument.CreateArgument;
+import com.example.demo.service.argument.UpdateArgument;
 import com.example.demo.repository.RecordRepository;
 import com.example.demo.Model.Record;
 import org.springframework.stereotype.Service;
@@ -49,17 +49,11 @@ public class RecordServiceImpl implements RecordService {
         return repository.deleteById(id);
     }
 
+
     @Override
     public List<Record> getAllRecords(String name) {
-        List<Record> records = new ArrayList<>(repository.getAllRecords());
+        return repository.getRecordsByName(name);
 
-        if (name != null && !name.isEmpty()) {
-            records = records.stream()
-                    .filter(record -> record.getName().equalsIgnoreCase(name))
-                    .collect(Collectors.toList());
-        }
-
-        return records;
     }
 
     @Override

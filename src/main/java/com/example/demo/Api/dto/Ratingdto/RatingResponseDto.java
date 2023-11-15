@@ -9,7 +9,6 @@ import lombok.*;
 public class RatingResponseDto {
     int id;
 
-
     int value;
 
     String comment;
