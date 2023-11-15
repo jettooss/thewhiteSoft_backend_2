@@ -13,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.List;
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -116,6 +118,23 @@ class RecordControllerIT {
                 .withStrictTypeChecking()
                 .isEqualTo(expectedDto);
     }
+    @Test
+    @Order(4)
+    void testGetAllRecords(SoftAssertions assertions) {
 
+        // Act
+        List<RecordResponseDto> responseDtoList = webTestClient.get()
+                .uri("/api/records/all")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(RecordResponseDto.class)
+                .returnResult().getResponseBody();
+
+        // Assert
+        assertions.assertThat(responseDtoList)
+                .hasSize(2)
+                .extracting("name")
+                .containsExactlyInAnyOrder("weqe", "ere");
+    }
 
  }

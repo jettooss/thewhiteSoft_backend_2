@@ -4,10 +4,9 @@ import com.example.demo.Model.argument.UpdateArgument;
 import com.example.demo.repository.RecordRepository;
 import com.example.demo.Model.Record;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class RecordServiceImpl implements RecordService {
@@ -20,11 +19,14 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public Record createRecord(CreateArgument record) {
-        Record newRecord = new Record(1, record.getName(), record.getDescription(), record.getLink());
-        return repository.save(newRecord);
+    public Record create(CreateArgument argument) {
+        Record rating = Record.builder()
+                .name(argument.getName())
+                .description(argument.getDescription())
+                .link(argument.getLink())
+                .build();
+        return repository.save(rating);
     }
-
 
 
     public Optional<Record> updateRecord(Integer id, UpdateArgument argument) {
@@ -49,15 +51,8 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public List<Record> getAllRecords(String name) {
-        List<Record> records = new ArrayList<>(repository.getAllRecords());
+        return repository.getRecordsByName(name);
 
-        if (name != null && !name.isEmpty()) {
-            records = records.stream()
-                    .filter(record -> record.getName().equalsIgnoreCase(name))
-                    .collect(Collectors.toList());
-        }
-
-        return records;
     }
 
     @Override

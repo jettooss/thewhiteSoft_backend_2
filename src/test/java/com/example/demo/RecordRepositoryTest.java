@@ -6,7 +6,7 @@ import com.example.demo.Model.Record;
 import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DataProcessorTest {
+public class RecordRepositoryTest {
     private RecordRepository recordRepository;
 
     @BeforeEach

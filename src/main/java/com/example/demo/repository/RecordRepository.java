@@ -1,14 +1,11 @@
 package com.example.demo.repository;
-
 import com.example.demo.Model.Record;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Getter;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,9 +28,9 @@ public class RecordRepository {
         this.filePath = filePath;
         this.inputSavePath = inputSavePath;
         this.records = new ConcurrentHashMap<>();
-        loadData();
     }
 
+    @PostConstruct
     private void loadData() {
         try {
             List<Record> recordList = objectMapper.readValue(new File(filePath), new TypeReference<List<Record>>() {
@@ -58,9 +55,14 @@ public class RecordRepository {
     }
 
     public Record save(Record record) {
-        int nextId = getNextId();
-        record.setId(nextId);
-        records.put(nextId, record);
+        int newId = getNextId();
+
+        if (records.containsKey(newId)) {
+            throw new IllegalArgumentException("id " + newId + " уже существует.");
+        }
+
+        record.setId(newId);
+        records.put(newId, record);
         return record;
     }
 
@@ -75,8 +77,14 @@ public class RecordRepository {
         return records.remove(id) != null;
     }
 
-    public List<Record> getAllRecords() {
-        return new ArrayList<>(records.values());
+    public List<Record> getRecordsByName(String name) {
+        if (name == null || name.isEmpty()) {
+            return new ArrayList<>(records.values());
+        }
+
+        return records.values().stream()
+                .filter(record -> record.getName().equalsIgnoreCase(name))
+                .collect(Collectors.toList());
     }
 
     public int getNextId() {

@@ -30,7 +30,7 @@ public class RecordController {
     @Operation(description = "Создать запись")
     public RecordResponseDto create(@RequestBody RecordCreateDto dto) {
         CreateArgument argument = recordMapper.toCreateArgument(dto);
-        return recordMapper.toDto(recordService.createRecord(argument));
+        return recordMapper.toDto(recordService.create(argument));
     }
 
 
