@@ -4,14 +4,12 @@ import lombok.*;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Record {
     private int id;
     private String name;
-
     private String description;
-
     private String link;
 }

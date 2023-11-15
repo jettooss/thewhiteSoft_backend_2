@@ -12,7 +12,6 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 @Mapper(componentModel = SPRING)
 public interface RecordMapper {
-
     CreateArgument toCreateArgument(RecordCreateDto dto);
 
     UpdateArgument toUpdateArgument(RecordUpdateDto dto);

@@ -1,10 +1,11 @@
-package com.example.demo.service.argument;
+package com.example.demo.Model.argument;
 import lombok.*;
 
 
+@Value
+@Builder
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 public class CreateArgument {
     String name;
