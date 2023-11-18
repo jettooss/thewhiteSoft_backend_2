@@ -1,5 +1,4 @@
 package com.example.demo.service;
-
 import com.example.demo.service.argument.CreateArgument;
 import com.example.demo.service.argument.UpdateArgument;
 import com.example.demo.repository.RecordRepository;
