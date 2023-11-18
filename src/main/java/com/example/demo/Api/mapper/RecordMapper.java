@@ -1,6 +1,6 @@
 package com.example.demo.Api.mapper;
 import com.example.demo.Api.dto.RecordDto.RecordCreateDto;
-import com.example.demo.Api.dto.RecordDto.RecordResponseDto;
+import com.example.demo.Api.dto.RecordDto.RecordDto;
 import com.example.demo.Api.dto.RecordDto.RecordUpdateDto;
 import com.example.demo.service.argument.CreateArgument;
 import com.example.demo.service.argument.UpdateArgument;
@@ -16,7 +16,7 @@ public interface RecordMapper {
 
     UpdateArgument toUpdateArgument(RecordUpdateDto dto);
 
-    RecordResponseDto toDto(Record dto);
+    RecordDto toDto(Record dto);
 
-    List<RecordResponseDto> toDtoList(List<Record> materials);
+    List<RecordDto> toDtoList(List<Record> materials);
 }

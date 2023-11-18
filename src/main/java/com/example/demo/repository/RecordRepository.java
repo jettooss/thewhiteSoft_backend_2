@@ -16,7 +16,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
-
 @Component
 public class RecordRepository {
     private final Map<Integer, Record> records;

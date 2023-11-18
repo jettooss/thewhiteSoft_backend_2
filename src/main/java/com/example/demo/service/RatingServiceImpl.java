@@ -1,5 +1,6 @@
 package com.example.demo.service;
 import com.example.demo.Model.Rating;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.repository.RatingRepository;
 import com.example.demo.service.argument.Rating.RatingCreateArgument;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,12 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-
     public List<Rating> getRatingsByRecordId(int id) {
-        return ratingRepository.findByRecordId(id);
+        List<Rating> ratings = ratingRepository.findByRecordId(id);
+        if (ratings.isEmpty()) {
+            throw new NotFoundException("Не найдена запись: " + id);
+        }
+        return ratings;
     }
     @Override
     public boolean deleteRating(int id) {

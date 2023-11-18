@@ -17,12 +17,16 @@ public class RecordRepositoryTest {
     @Test
     void testLoadRecordsFromJson() {
         Record record = recordRepository.getRecordById(1);
+        System.out.println(   record); // Add this line for logging
+
         assertNotNull(record, "Record with ID 1 should not be null");
     }
 
     @Test
     void testGetRecordById() {
         Record record = recordRepository.getRecordById(2);
+        System.out.println(   record); // Add this line for logging
+
         assertNotNull(record, "Record should not be null");
         assertEquals("A", record.getName(), "Name should match");
         assertEquals("2323qweqwe2", record.getDescription(), "Description should match");
@@ -34,7 +38,7 @@ public class RecordRepositoryTest {
     @Test
     void testSaveToJson() {
 
-        String testFileName = "test-save";
+        String testFileName = "test-savdddde";
         try {
             assertTrue(recordRepository.saveToJson(testFileName + ".json"), "Saving records to JSON should be successful");
         } catch (IOException e) {

@@ -1,4 +1,5 @@
 package com.example.demo.service;
+
 import com.example.demo.service.argument.CreateArgument;
 import com.example.demo.service.argument.UpdateArgument;
 import com.example.demo.repository.RecordRepository;
@@ -10,7 +11,6 @@ import java.util.Optional;
 
 @Service
 public class RecordServiceImpl implements RecordService {
-
 
     private final RecordRepository repository;
 
@@ -27,7 +27,6 @@ public class RecordServiceImpl implements RecordService {
                 .build();
         return repository.save(rating);
     }
-
 
     public Optional<Record> updateRecord(Integer id, UpdateArgument argument) {
         Record existingRecord = repository.getRecordById(id);
@@ -48,7 +47,6 @@ public class RecordServiceImpl implements RecordService {
     public boolean deleteRecord(Integer id) {
         return repository.deleteById(id);
     }
-
 
     @Override
     public List<Record> getAllRecords(String name) {

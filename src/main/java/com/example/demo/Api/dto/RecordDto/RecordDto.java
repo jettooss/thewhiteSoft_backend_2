@@ -8,7 +8,7 @@ import lombok.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecordResponseDto  {
+public class RecordDto {
     private int id;
     private String name;
     private String description;

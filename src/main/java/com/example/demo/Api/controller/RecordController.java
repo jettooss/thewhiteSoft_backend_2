@@ -1,7 +1,6 @@
 package com.example.demo.Api.controller;
-import com.example.demo.exception.NotFoundException;
 import com.example.demo.Api.dto.RecordDto.RecordCreateDto;
-import com.example.demo.Api.dto.RecordDto.RecordResponseDto;
+import com.example.demo.Api.dto.RecordDto.RecordDto;
 import com.example.demo.Api.dto.RecordDto.RecordUpdateDto;
 import com.example.demo.Api.mapper.RecordMapper;
 import com.example.demo.service.RecordService;
@@ -28,40 +27,38 @@ public class RecordController {
 
     @PostMapping("{id}/create")
     @Operation(description = "Создать запись")
-    public RecordResponseDto create(@RequestBody RecordCreateDto dto) {
+    public RecordDto create(@RequestBody RecordCreateDto dto) {
         CreateArgument argument = recordMapper.toCreateArgument(dto);
         return recordMapper.toDto(recordService.create(argument));
     }
 
-
     @PostMapping("{id}/update")
     @Operation(description = "Изменить запись по ID")
-    public ResponseEntity<RecordResponseDto> updateByID(@PathVariable("id") Integer id, @RequestBody RecordUpdateDto dto) {
+    public ResponseEntity<RecordDto> updateByID(@PathVariable("id") Integer id, @RequestBody RecordUpdateDto dto) {
         UpdateArgument argument = recordMapper.toUpdateArgument(dto);
         Optional<Record> updatedRecord = recordService.updateRecord(id, argument);
 
-        return updatedRecord
-                .map(recordMapper::toDto)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return updatedRecord.map(recordMapper::toDto).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/all")
     @Operation(description = "Получить все записи")
-    public List<RecordResponseDto> getAllRecords(@RequestParam(required = false) String name) {
-        List<RecordResponseDto> dtos = recordMapper.toDtoList(recordService.getAllRecords(name));
+    public List<RecordDto> getAllRecords(@RequestParam(required = false) String name) {
+        List<RecordDto> dtos = recordMapper.toDtoList(recordService.getAllRecords(name));
         return dtos;
     }
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("{id}/delete")
     @Operation(description = "Удалить запись по ID")
-    public ResponseEntity<Void> deleteRecord(@PathVariable Integer id) {
+    public ResponseEntity<Object> deleteRecord(@PathVariable Integer id) {
         boolean deleted = recordService.deleteRecord(id);
         if (deleted) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            throw new NotFoundException("id не найдено : " + id);
+
+            return new ResponseEntity<>("Не удалось удалить рейтинг с идентификатором ID: " + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
 
 }

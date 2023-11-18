@@ -1,6 +1,6 @@
 package com.example.demo.Api.controller;
 import com.example.demo.Api.dto.Ratingdto.RatingCreateDto;
-import com.example.demo.Api.dto.Ratingdto.RatingResponseDto;
+import com.example.demo.Api.dto.Ratingdto.RatingDto;
 import com.example.demo.Api.mapper.RatingMapper;
 import com.example.demo.Model.Rating;
 import com.example.demo.exception.NotFoundException;
@@ -12,7 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -24,32 +26,37 @@ public class RatingController {
     private final RatingService ratingService;
     private final RatingMapper ratingMapper;
 
-    @PostMapping("{id}/create")
+    @PostMapping("/create")
     @Operation(description = "Создать запись")
-    public RatingResponseDto create(@Valid @RequestBody RatingCreateDto dto) {
+    public RatingDto create(@Valid @RequestBody RatingCreateDto dto) {
         RatingCreateArgument argument = ratingMapper.toCreateArgument(dto);
-        System.out.println(argument);
 
         return ratingMapper.toRatingResponseDto(ratingService.addRating(argument));
     }
 
-    @GetMapping("{id}/getByRecordId")
+    @GetMapping("{id}/ist-by-record")
     @Operation(description = "Получить оценки по ID записи")
-    public List<RatingResponseDto> getRatingsByRecordId(@PathVariable("id") int id) {
-        List<Rating> ratings = ratingService.getRatingsByRecordId(id);
-        return ratings.stream()
-                .map(ratingMapper::toRatingResponseDto)
-                .collect(Collectors.toList());
+    public ResponseEntity<?> getRatingsByRecordId(@PathVariable("id") int id) {
+        try {
+            List<Rating> ratings = ratingService.getRatingsByRecordId(id);
+            List<RatingDto> responseDtos = ratings.stream().map(ratingMapper::toRatingResponseDto).collect(Collectors.toList());
+            return new ResponseEntity<>(responseDtos, HttpStatus.OK);
+        } catch (NotFoundException ex) {
+            Map<String, Object> responseBody = new HashMap<>();
+            responseBody.put("message", ex.getMessage());
+            return new ResponseEntity<>(responseBody, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("{id}/delete")
     @Operation(description = "Удалить оценку по ID")
-    public ResponseEntity<Void> deleteRating(@PathVariable int id) {
+    public ResponseEntity<Object> deleteRating(@PathVariable int id) {
         boolean deleted = ratingService.deleteRating(id);
         if (deleted) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            throw new NotFoundException("id не найдено: " + id);
+
+            return new ResponseEntity<>("Не удалось удалить рейтинг с идентификатором ID: " + id, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

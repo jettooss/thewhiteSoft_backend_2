@@ -1,6 +1,6 @@
 package com.example.demo;
 import com.example.demo.Api.dto.RecordDto.RecordCreateDto;
-import com.example.demo.Api.dto.RecordDto.RecordResponseDto;
+import com.example.demo.Api.dto.RecordDto.RecordDto;
 import com.example.demo.Api.dto.RecordDto.RecordUpdateDto;
 import com.example.demo.service.RecordService;
 import org.assertj.core.api.SoftAssertions;
@@ -39,17 +39,17 @@ class RecordControllerIT {
                 .build();
 
         // Act
-        RecordResponseDto responseDto = webTestClient.post()
+        RecordDto responseDto = webTestClient.post()
                 .uri("/api/records/{id}/create", 4)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(recordCreateDto)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(RecordResponseDto.class)
+                .expectBody(RecordDto.class)
                 .returnResult().getResponseBody();
 
         // Assert
-        RecordResponseDto expectedDto = RecordResponseDto.builder()
+        RecordDto expectedDto = RecordDto.builder()
                 .id(4)
                 .name("name")
                 .description("name")
@@ -65,7 +65,7 @@ class RecordControllerIT {
     @Test
     @Order(2)
     void TestDeleteRecordIsOk(SoftAssertions assertions) {
-        RecordCreateDto createDto  = RecordCreateDto.builder()
+        RecordCreateDto createDto = RecordCreateDto.builder()
                 .name("name")
                 .description("name")
                 .link("name")
@@ -81,7 +81,6 @@ class RecordControllerIT {
     }
 
 
-
     @Test
     @Order(3)
     void TestPostUpdateByIDIsOk(SoftAssertions assertions) {
@@ -93,19 +92,19 @@ class RecordControllerIT {
                 .build();
 
         // Act
-        RecordResponseDto responseDto = webTestClient.post()
+        RecordDto responseDto = webTestClient.post()
                 .uri("/api/records/{id}/update", 4)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(recordUpdateDto)
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBody(RecordResponseDto.class)
+                .expectBody(RecordDto.class)
                 .returnResult()
                 .getResponseBody();
 
         // Assert
-        RecordResponseDto expectedDto = RecordResponseDto.builder()
+        RecordDto expectedDto = RecordDto.builder()
                 .id(4)
                 .name("name")
                 .description("name")
@@ -117,23 +116,24 @@ class RecordControllerIT {
                 .withStrictTypeChecking()
                 .isEqualTo(expectedDto);
     }
+
     @Test
     @Order(4)
     void testGetAllRecords(SoftAssertions assertions) {
 
         // Act
-        List<RecordResponseDto> responseDtoList = webTestClient.get()
+        List<RecordDto> responseDtoList = webTestClient.get()
                 .uri("/api/records/all")
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(RecordResponseDto.class)
+                .expectBodyList(RecordDto.class)
                 .returnResult().getResponseBody();
 
         // Assert
         assertions.assertThat(responseDtoList)
-                .hasSize(2)
+                .hasSize(3)
                 .extracting("name")
-                .containsExactlyInAnyOrder("weqe", "ere");
+                .containsExactlyInAnyOrder("weqe", "ere", "name");
     }
 
- }
+}

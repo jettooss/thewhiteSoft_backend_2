@@ -6,7 +6,8 @@ import lombok.*;
 @Setter
 @Builder
 @AllArgsConstructor
-public class RatingResponseDto {
+public class RatingDto {
+
     int id;
 
     int value;
