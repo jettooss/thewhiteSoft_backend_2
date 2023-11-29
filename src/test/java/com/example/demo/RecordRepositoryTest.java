@@ -18,8 +18,6 @@ public class RecordRepositoryTest {
     @Test
     void testLoadRecordsFromJson() {
         Record record = recordRepository.getRecordById(1);
-        System.out.println(record);
-
         assertNotNull(record, "Record with ID 1 should not be null");
     }
 
