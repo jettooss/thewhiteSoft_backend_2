@@ -31,13 +31,12 @@ public class RecordRepository {
     }
 
     @PostConstruct
-    private void loadData() {
+    public void loadData() {
         try {
             List<Record> recordList = objectMapper.readValue(new File(filePath), new TypeReference<List<Record>>() {
             });
 
-            this.records.putAll(recordList.stream()
-                    .collect(Collectors.toMap(Record::getId, Function.identity())));
+            this.records.putAll(recordList.stream().collect(Collectors.toMap(Record::getId, Function.identity())));
         } catch (IOException e) {
             throw new RuntimeException("Failed to load records from dataPath: " + filePath, e);
         }
@@ -82,15 +81,11 @@ public class RecordRepository {
             return new ArrayList<>(records.values());
         }
 
-        return records.values().stream()
-                .filter(record -> record.getName().equalsIgnoreCase(name))
-                .collect(Collectors.toList());
+        return records.values().stream().filter(record -> record.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
     }
 
     public int getNextId() {
-        int maxId = records.keySet().stream()
-                .max(Integer::compareTo)
-                .orElse(0);
+        int maxId = records.keySet().stream().max(Integer::compareTo).orElse(0);
 
         return maxId + 1;
     }

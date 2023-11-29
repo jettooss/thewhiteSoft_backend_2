@@ -15,10 +15,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     public Rating addRating(RatingCreateArgument argument) {
-        Rating rating = Rating.builder()
-                .value(argument.getValue())
-                .comment(argument.getComment())
-                .build();
+        Rating rating = Rating.builder().value(argument.getValue()).comment(argument.getComment()).build();
         return ratingRepository.save(rating);
     }
 
@@ -30,6 +27,7 @@ public class RatingServiceImpl implements RatingService {
         }
         return ratings;
     }
+
     @Override
     public boolean deleteRating(int id) {
         return ratingRepository.deleteById(id);

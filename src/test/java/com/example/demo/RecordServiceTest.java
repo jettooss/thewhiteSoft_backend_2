@@ -1,5 +1,4 @@
 package com.example.demo;
-import com.example.demo.service.RatingServiceImpl;
 import com.example.demo.service.argument.CreateArgument;
 import com.example.demo.service.argument.UpdateArgument;
 import com.example.demo.repository.RecordRepository;
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
 
 public class RecordServiceTest {
 
@@ -100,10 +98,7 @@ public class RecordServiceTest {
     void testGetAllRecords() {
         // Arrange
         String name = "TestName";
-        List<Record> records = Arrays.asList(
-                Record.builder().name(name).description("Desc1").link("Link1").build(),
-                Record.builder().name(name).description("Desc2").link("Link2").build()
-        );
+        List<Record> records = Arrays.asList(Record.builder().name(name).description("Desc1").link("Link1").build(), Record.builder().name(name).description("Desc2").link("Link2").build());
         when(repository.getRecordsByName(name)).thenReturn(records);
 
         // Act
