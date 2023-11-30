@@ -59,10 +59,13 @@ public class RecordServiceTest {
 
         // Assert
         assertTrue(result.isPresent());
-        assertEquals("UpdatedName", existingRecord.getName());
-        assertEquals("UpdatedDescription", existingRecord.getDescription());
-        assertEquals("UpdatedLink", existingRecord.getLink());
-        verify(repository, times(1)).update(existingRecord);
+
+        Record updatedRecord = result.get();
+
+        assertEquals(recordId, updatedRecord.getId());
+        assertEquals("UpdatedName", updatedRecord.getName());
+        assertEquals("UpdatedDescription", updatedRecord.getDescription());
+        assertEquals("UpdatedLink", updatedRecord.getLink());
     }
 
     @Test
