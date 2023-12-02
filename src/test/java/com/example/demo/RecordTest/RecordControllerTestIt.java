@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.RecordTest;
 import com.example.demo.Api.dto.RecordDto.RecordCreateDto;
 import com.example.demo.Api.dto.RecordDto.RecordDto;
 import com.example.demo.Api.dto.RecordDto.RecordUpdateDto;

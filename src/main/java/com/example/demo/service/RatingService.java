@@ -4,9 +4,9 @@ import com.example.demo.service.argument.Rating.RatingCreateArgument;
 import java.util.List;
 
 public interface RatingService {
-    Rating addRating(RatingCreateArgument record);
 
     List<Rating> getRatingsByRecordId(int id);
+    List<Rating> getRatingsById(int id);
+    void delete(int id);
 
-    boolean deleteRating(int id);
 }

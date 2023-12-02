@@ -13,4 +13,7 @@ public class RatingDto {
     int value;
 
     String comment;
+
+    int recordId;
+
 }

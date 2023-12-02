@@ -8,11 +8,11 @@ import java.util.Optional;
 public interface RecordService {
     Record create(CreateArgument record);
 
-    Optional<Record> updateRecord(Integer id, UpdateArgument record);
+    Optional<Record> update(Integer id, UpdateArgument record);
 
-    boolean deleteRecord(Integer id);
+    void deleteRecord(Integer id);
 
-    List<Record> getAllRecords(String name);
+    List<Record> getAll(String name);
 
     Record searchByID(Integer id);
 

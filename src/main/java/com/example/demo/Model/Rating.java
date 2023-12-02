@@ -5,7 +5,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@EqualsAndHashCode
+@NoArgsConstructor
 @AllArgsConstructor
 public class Rating {
 
@@ -14,4 +14,7 @@ public class Rating {
     private int value;
 
     private String comment;
+
+    private int recordId;
+
 }

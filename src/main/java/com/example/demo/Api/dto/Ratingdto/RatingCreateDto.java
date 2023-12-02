@@ -17,4 +17,6 @@ public class RatingCreateDto {
 
     @NotBlank(message = "Комментарий не может быть пустым")
     String comment;
+
+    int recordId;
 }

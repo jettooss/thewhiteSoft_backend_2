@@ -6,6 +6,9 @@ public interface RatingRepository {
     Rating save(Rating rating);
 
     List<Rating> findByRecordId(int id);
+    List<Rating> findById(int id);
 
-    boolean deleteById(int id);
+    void deleteById(int id);
+    public int  getNextId();
+
 }

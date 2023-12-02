@@ -27,7 +27,7 @@ public class RecordServiceImpl implements RecordService {
         return repository.save(rating);
     }
 
-    public Optional<Record> updateRecord(Integer id, UpdateArgument argument) {
+    public Optional<Record> update(Integer id, UpdateArgument argument) {
         Record existingRecord = repository.getRecordById(id);
 
         if (existingRecord != null) {
@@ -43,12 +43,13 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public boolean deleteRecord(Integer id) {
-        return repository.deleteById(id);
+    public void deleteRecord(Integer id) {
+         repository.deleteById(id);
     }
 
     @Override
-    public List<Record> getAllRecords(String name) {
+    public List<Record> getAll(String name) {
+
         return repository.getRecordsByName(name);
 
     }

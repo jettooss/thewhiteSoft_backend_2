@@ -20,7 +20,14 @@ public class MemoryRatingRepositoryImpl implements RatingRepository {
     }
 
     @Override
-    public List<Rating> findByRecordId(int id) {
+    public List<Rating> findByRecordId(int RecordId) {
+        return ratings.values()
+                .stream()
+                .filter(rating -> rating.getRecordId() == RecordId)
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<Rating> findById(int id) {
         return ratings.values()
                 .stream()
                 .filter(rating -> rating.getId() == id)
@@ -28,9 +35,11 @@ public class MemoryRatingRepositoryImpl implements RatingRepository {
     }
 
     @Override
-    public boolean deleteById(int id) {
-        return ratings.remove(id) != null;
+    public void deleteById(int id) {
+         ratings.remove(id);
     }
+
+    @Override
     public int getNextId() {
         int maxId = ratings.keySet().stream()
                 .max(Integer::compareTo)

@@ -7,6 +7,8 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 public class RatingCreateArgument {
-      int value;
-      String comment;
+    private int value;
+    private String comment;
+    private int recordId;  // Изменено с recordID на recordId
+
 }

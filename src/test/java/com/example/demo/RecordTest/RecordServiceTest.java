@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.RecordTest;
 import com.example.demo.service.argument.CreateArgument;
 import com.example.demo.service.argument.UpdateArgument;
 import com.example.demo.repository.RecordRepository;
@@ -55,7 +55,7 @@ public class RecordServiceTest {
         when(repository.getRecordById(recordId)).thenReturn(existingRecord);
 
         // Act
-        Optional<Record> result = recordService.updateRecord(recordId, updateArgument);
+        Optional<Record> result = recordService.update(recordId, updateArgument);
 
         // Assert
         assertTrue(result.isPresent());
@@ -76,7 +76,7 @@ public class RecordServiceTest {
         when(repository.getRecordById(nonExistentRecordId)).thenReturn(null);
 
         // Act
-        Optional<Record> result = recordService.updateRecord(nonExistentRecordId, updateArgument);
+        Optional<Record> result = recordService.update(nonExistentRecordId, updateArgument);
 
         // Assert
         assertFalse(result.isPresent());
@@ -90,10 +90,10 @@ public class RecordServiceTest {
         when(repository.deleteById(recordId)).thenReturn(true);
 
         // Act
-        boolean result = recordService.deleteRecord(recordId);
+        recordService.deleteRecord(recordId);
 
         // Assert
-        assertTrue(result);
+//        assertTrue(result);
         verify(repository, times(1)).deleteById(recordId);
     }
 
@@ -105,7 +105,7 @@ public class RecordServiceTest {
         when(repository.getRecordsByName(name)).thenReturn(records);
 
         // Act
-        List<Record> result = recordService.getAllRecords(name);
+        List<Record> result = recordService.getAll(name);
 
         // Assert
         assertNotNull(result);

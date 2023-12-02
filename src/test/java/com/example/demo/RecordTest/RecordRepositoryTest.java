@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.RecordTest;
 import com.example.demo.repository.RecordRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

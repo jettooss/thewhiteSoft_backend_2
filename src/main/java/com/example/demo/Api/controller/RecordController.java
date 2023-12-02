@@ -26,28 +26,35 @@ public class RecordController {
     @PostMapping("{id}/create")
     @Operation(description = "Создать запись")
     public RecordDto create(@RequestBody RecordCreateDto dto) {
+
         CreateArgument argument = recordMapper.toCreateArgument(dto);
+
         return recordMapper.toDto(recordService.create(argument));
     }
 
     @PostMapping("{id}/update")
     @Operation(description = "Изменить запись по ID")
     public RecordDto updateByID(@PathVariable("id") Integer id, @RequestBody RecordUpdateDto dto) {
+
         UpdateArgument argument = recordMapper.toUpdateArgument(dto);
-        Optional<Record> updatedRecord = recordService.updateRecord(id, argument);
+        Optional<Record> updatedRecord = recordService.update(id, argument);
 
         return updatedRecord.map(recordMapper::toDto).orElseThrow();
     }
+
     @GetMapping("all")
     @Operation(description = "Получить все записи")
     public List<RecordDto> getAllRecords(@RequestParam(required = false) String name) {
-        List<RecordDto> dtos = recordMapper.toDtoList(recordService.getAllRecords(name));
+
+        List<RecordDto> dtos = recordMapper.toDtoList(recordService.getAll(name));
         return dtos;
     }
+
     @DeleteMapping("{id}/delete")
     @Operation(description = "Удалить запись по ID")
     public void deleteRecord(@PathVariable Integer id) {
-         recordService.deleteRecord(id);
+
+        recordService.deleteRecord(id);
 
     }
 
