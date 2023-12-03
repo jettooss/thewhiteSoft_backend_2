@@ -1,14 +1,12 @@
 package com.example.demo.repository;
 import com.example.demo.Model.Rating;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
 import java.util.List;
 
-public interface RatingRepository {
-    Rating save(Rating rating);
 
-    List<Rating> findByRecordId(int id);
-    List<Rating> findById(int id);
-
-    void deleteById(int id);
-    public int  getNextId();
-
+@Repository
+public interface RatingRepository extends JpaRepository<Rating, Integer>, JpaSpecificationExecutor<Rating> {
+    List<Rating> findByRecordId(int recordId);
 }

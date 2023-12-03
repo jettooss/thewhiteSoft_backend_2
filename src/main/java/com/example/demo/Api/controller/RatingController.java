@@ -9,6 +9,10 @@ import com.example.demo.service.argument.Rating.RatingCreateArgument;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,9 +39,17 @@ public class RatingController {
 
     @GetMapping("list-by-record")
     @Operation(description = "Получить оценки по ID записи")
-    public List<RatingDto> getRatingsByRecordId(@RequestParam int recordId) {
+    public List<RatingDto> getRatingsByRecordId(
+            @RequestParam int recordId,
+            @RequestParam(required = false) Integer filterValue,
+            @RequestParam(defaultValue = "value") String sortBy,
+            @RequestParam(defaultValue = "desc") String sortDirection,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
 
-        List<Rating> ratings = ratingService.getRatingsByRecordId(recordId);
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(sortDirection), sortBy));
+
+        List<Rating> ratings = ratingService.getRatingsByRecordId(recordId, filterValue, pageable);
 
         return ratings.stream()
                 .map(ratingMapper::toRatingResponseDto)
@@ -50,4 +62,6 @@ public class RatingController {
 
         ratingService.delete(id);
     }
+
+
 }
