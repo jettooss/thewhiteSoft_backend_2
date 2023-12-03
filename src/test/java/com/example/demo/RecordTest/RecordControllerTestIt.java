@@ -40,7 +40,7 @@ class RecordControllerIT {
 
         // Act
         RecordDto responseDto = webTestClient.post()
-                .uri("/api/records/{id}/create", 4)
+                .uri("/api/records/{id}/create", 11)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(recordCreateDto)
                 .exchange()
@@ -50,7 +50,7 @@ class RecordControllerIT {
 
         // Assert
         RecordDto expectedDto = RecordDto.builder()
-                .id(4)
+                .id(11)
                 .name("name")
                 .description("name")
                 .link("name")

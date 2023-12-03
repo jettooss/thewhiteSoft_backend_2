@@ -8,6 +8,8 @@ import com.example.demo.service.argument.Rating.RatingCreateArgument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 
 @Component
 public class RatingAction {
@@ -23,7 +25,11 @@ public class RatingAction {
 
     public Rating create(RatingCreateArgument b) {
 
-        Record existingRecord = recordRepository.getRecordById(b.getRecordId());
+        Record existingRecord = recordRepository.findById(b.getRecordId());
+//        System.out.println(existingRecord.getId());
+//        Record existingRecordOptional = recordRepository.findById(b.getRecordId());
+
+//        System.out.println(existingRecordOptional.get());
 
         if (existingRecord == null) {
             throw new NotFoundException("Запись с ID " + b.getRecordId() + " не найдена");
@@ -32,9 +38,10 @@ public class RatingAction {
         Rating rating = Rating.builder()
                 .value(b.getValue())
                 .comment(b.getComment())
-                .recordId(existingRecord.getId())
+                .record(existingRecord)
                 .build();
 
         return ratingRepository.save(rating);
     }
+
 }
