@@ -17,12 +17,12 @@ public class CreateRatingAction {
 
     public Rating execute(CreateRatingActionArgument argument) {
 
-        Record getExisting = recordService.getExisting(argument.getRecordId());
+        Record existing = recordService.getExisting(argument.getRecordId());
 
         CreateRatingActionArgument rating = CreateRatingActionArgument.builder()
                                                                       .value(argument.getValue())
                                                                       .comment(argument.getComment())
-                                                                      .recordId(getExisting.getId())
+                                                                      .recordId(existing.getId())
                                                                       .build();
 
         return ratingService.create(rating);
