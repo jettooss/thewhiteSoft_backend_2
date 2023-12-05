@@ -81,11 +81,17 @@ public class RecordRepository {
             return new ArrayList<>(records.values());
         }
 
-        return records.values().stream().filter(record -> record.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
+        return records.values()
+                      .stream()
+                      .filter(record -> record.getName().equalsIgnoreCase(name))
+                      .collect(Collectors.toList());
     }
 
     public int getNextId() {
-        int maxId = records.keySet().stream().max(Integer::compareTo).orElse(0);
+        int maxId = records.keySet()
+                           .stream()
+                           .max(Integer::compareTo)
+                           .orElse(0);
 
         return maxId + 1;
     }

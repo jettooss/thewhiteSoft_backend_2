@@ -20,5 +20,4 @@ public interface RecordMapper {
 
     List<RecordDto> toDtoList(List<Record> materials);
 
-//    RecordDto toDto(Record record);
 }

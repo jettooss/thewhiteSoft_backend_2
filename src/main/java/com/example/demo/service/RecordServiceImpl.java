@@ -20,12 +20,12 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public Record create(CreateArgument argument) {
-
         Record rating = Record.builder()
-                .name(argument.getName())
-                .description(argument.getDescription())
-                .link(argument.getLink())
-                .build();
+                              .name(argument.getName())
+                              .description(argument.getDescription())
+                              .link(argument.getLink())
+                              .build();
+
         return repository.save(rating);
     }
 
@@ -36,10 +36,11 @@ public class RecordServiceImpl implements RecordService {
             existingRecord.setName(argument.getName());
             existingRecord.setDescription(argument.getDescription());
             existingRecord.setLink(argument.getLink());
-
             repository.update(existingRecord);
+
             return Optional.of(existingRecord);
-        } else {
+        } else
+        {
             return Optional.empty();
         }
     }
@@ -51,7 +52,6 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public List<Record> getAll(String name) {
-
         return repository.getRecordsByName(name);
 
     }
@@ -60,7 +60,7 @@ public class RecordServiceImpl implements RecordService {
     public Record searchByID(Integer id) {
         Record record = repository.getRecordById(id);
         if (record == null) {
-            throw new NotFoundException("Record не найдено с ID: " + id);
+            String.format("Запись с идентификатором %s не найдена", id);
         }
         return record;
     }

@@ -27,14 +27,13 @@ public class RatingController {
     @Operation(description = "Создать запись")
     public RatingDto create(@Valid @RequestBody RatingCreateDto dto) {
         CreateRatingActionArgument argument = ratingMapper.toCreateArgument(dto);
-        Rating createdRating = ratingAction.getExisting(argument);
+        Rating createdRating = ratingAction.execute(argument);
         return ratingMapper.toRatingResponseDto(createdRating);
     }
 
     @GetMapping("list-by-record")
     @Operation(description = "Получить оценки по ID записи")
     public List<RatingDto> getRatingsByRecordId(@RequestParam int recordId) {
-
         List<Rating> ratings = ratingService.getRatingsByRecordId(recordId);
 
         return ratings.stream()
@@ -45,7 +44,6 @@ public class RatingController {
     @DeleteMapping("{id}/delete")
     @Operation(description = "Удалить оценку по ID")
     public void deleteRating(@PathVariable int id) {
-
         ratingService.delete(id);
     }
 }

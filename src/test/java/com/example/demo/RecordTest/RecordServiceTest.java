@@ -33,12 +33,11 @@ public class RecordServiceTest {
     void testCreateRecord() {
         // Arrange
         CreateArgument createArgument = new CreateArgument("TestName", "TestDescription", "TestLink");
-        Record createdRecord = Record
-                                    .builder()
-                                    .name("TestName")
-                                    .description("TestDescription")
-                                    .link("TestLink")
-                                    .build();
+        Record createdRecord = Record.builder()
+                                     .name("TestName")
+                                     .description("TestDescription")
+                                     .link("TestLink")
+                                     .build();
 
         when(repository.save(any())).thenReturn(createdRecord);
 
@@ -58,13 +57,12 @@ public class RecordServiceTest {
         // Arrange
         Integer recordId = 1;
         UpdateArgument updateArgument = new UpdateArgument("UpdatedName", "UpdatedDescription", "UpdatedLink");
-        Record existingRecord = Record
-                                    .builder()
-                                    .id(recordId)
-                                    .name("OldName")
-                                    .description("OldDescription")
-                                    .link("OldLink")
-                                    .build();
+        Record existingRecord = Record.builder()
+                                      .id(recordId)
+                                      .name("OldName")
+                                      .description("OldDescription")
+                                      .link("OldLink")
+                                      .build();
         when(repository.getRecordById(recordId)).thenReturn(existingRecord);
 
         // Act
@@ -115,16 +113,16 @@ public class RecordServiceTest {
         String name = "TestName";
         List<Record> records = Arrays.asList(
                 Record.builder()
-                        .name(name)
-                        .description("Desc1")
-                        .link("Link1")
-                        .build(),
+                      .name(name)
+                      .description("Desc1")
+                      .link("Link1")
+                      .build(),
 
                 Record.builder()
-                        .name(name)
-                        .description("Desc2")
-                        .link("Link2")
-                        .build()
+                      .name(name)
+                      .description("Desc2")
+                      .link("Link2")
+                      .build()
         );
 
         when(repository.getRecordsByName(name)).thenReturn(records);
@@ -142,13 +140,12 @@ public class RecordServiceTest {
     void testSearchByID() {
         // Arrange
         Integer recordId = 1;
-        Record record = Record
-                            .builder()
-                            .id(recordId)
-                            .name("TestName")
-                            .description("TestDescription")
-                            .link("TestLink")
-                            .build();
+        Record record = Record.builder()
+                              .id(recordId)
+                              .name("TestName")
+                              .description("TestDescription")
+                              .link("TestLink")
+                              .build();
 
         when(repository.getRecordById(recordId)).thenReturn(record);
 

@@ -32,10 +32,10 @@ class MemoryRatingRepositoryImplTest {
         // Arrange
         MemoryRatingRepositoryImpl ratingRepository = new MemoryRatingRepositoryImpl();
         Rating ratingToDelete = Rating.builder()
-                                .value(5)
-                                .comment("Test comment")
-                                .recordId(1)
-                                .build();
+                                      .value(5)
+                                      .comment("Test comment")
+                                      .recordId(1)
+                                      .build();
         Rating savedRating = ratingRepository.save(ratingToDelete);
 
         // Act
@@ -50,15 +50,15 @@ class MemoryRatingRepositoryImplTest {
         // Arrange
         MemoryRatingRepositoryImpl ratingRepository = new MemoryRatingRepositoryImpl();
         Rating rating1 = Rating.builder()
-                        .value(5)
-                        .comment("Test comment 1")
-                        .recordId(1)
-                        .build();
+                               .value(5)
+                               .comment("Test comment 1")
+                               .recordId(1)
+                               .build();
         Rating rating2 = Rating.builder()
-                        .value(4)
-                        .comment("Test comment 2")
-                        .recordId(1)
-                        .build();
+                               .value(4)
+                               .comment("Test comment 2")
+                               .recordId(1)
+                               .build();
 
         ratingRepository.save(rating1);
         ratingRepository.save(rating2);

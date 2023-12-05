@@ -30,7 +30,7 @@ public class CreateRatingActionTest {
     }
 
     @Test
-    void testGetExisting() {
+    void testCreateRating() {
         // Arrange
         CreateRatingActionArgument argument = CreateRatingActionArgument.builder()
                 .recordId(1)
@@ -38,21 +38,20 @@ public class CreateRatingActionTest {
                 .comment("Test comment")
                 .build();
 
-        Record existingRecord = new Record();
-        existingRecord.setId(1);
+        Record createRecord = mock(Record.class);
+        when(createRecord.getId()).thenReturn(1);
 
-        when(recordService.searchByID(1)).thenReturn(existingRecord);
+        when(recordService.searchByID(1)).thenReturn(createRecord);
 
-        Rating createdRating = new Rating();
-        createdRating.setId(1);
+        Rating createdRating = mock(Rating.class);
+        when(createdRating.getId()).thenReturn(1);
+
         when(ratingService.create(any(CreateRatingActionArgument.class))).thenReturn(createdRating);
 
         // Act
-        Rating result = ratingAction.getExisting(argument);
+        Rating result = ratingAction.execute(argument);
 
         // Assert
         assertEquals(1, result.getId());
     }
-
 }
-

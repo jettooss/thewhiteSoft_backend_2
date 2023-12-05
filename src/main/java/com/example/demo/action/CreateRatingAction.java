@@ -15,15 +15,15 @@ public class CreateRatingAction {
     private final RecordService recordService;
     private final RatingService ratingService;
 
-    public Rating getExisting(CreateRatingActionArgument argument) {
+    public Rating execute(CreateRatingActionArgument argument) {
 
-        Record existingRecord = recordService.searchByID(argument.getRecordId());
+        Record getExisting = recordService.searchByID(argument.getRecordId());
 
         CreateRatingActionArgument rating = CreateRatingActionArgument.builder()
-                .value(argument.getValue())
-                .comment(argument.getComment())
-                .recordId(existingRecord.getId())
-                .build();
+                                                                      .value(argument.getValue())
+                                                                      .comment(argument.getComment())
+                                                                      .recordId(getExisting.getId())
+                                                                      .build();
 
         return ratingService.create(rating);
     }
