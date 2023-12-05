@@ -1,18 +1,17 @@
-package com.example.demo.Api.controller;
-import com.example.demo.Api.dto.RecordDto.RecordCreateDto;
-import com.example.demo.Api.dto.RecordDto.RecordDto;
-import com.example.demo.Api.dto.RecordDto.RecordUpdateDto;
-import com.example.demo.Api.mapper.RecordMapper;
+package com.example.demo.api.controller;
+import com.example.demo.api.dto.RecordDto.RecordCreateDto;
+import com.example.demo.api.dto.RecordDto.RecordDto;
+import com.example.demo.api.dto.RecordDto.RecordUpdateDto;
+import com.example.demo.api.mapper.RecordMapper;
 import com.example.demo.service.RecordService;
-import com.example.demo.Model.Record;
+import com.example.demo.service.argument.CreateArgument;
+import com.example.demo.service.argument.UpdateArgument;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
-import com.example.demo.service.argument.CreateArgument;
-import com.example.demo.service.argument.UpdateArgument;
+import com.example.demo.model.Record;
 
 
 @RestController

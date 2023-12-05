@@ -1,7 +1,7 @@
 package com.example.demo.RatingTest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import com.example.demo.Model.Rating;
+import com.example.demo.model.Rating;
 import com.example.demo.repository.RatingRepository;
 import com.example.demo.service.RatingServiceImpl;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package com.example.demo.service;
 import com.example.demo.service.argument.CreateArgument;
 import com.example.demo.service.argument.UpdateArgument;
-import com.example.demo.Model.Record;
+import com.example.demo.model.Record;
 import java.util.List;
 import java.util.Optional;
 

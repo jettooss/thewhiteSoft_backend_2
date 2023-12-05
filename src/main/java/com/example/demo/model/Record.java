@@ -1,4 +1,4 @@
-package com.example.demo.Model;
+package com.example.demo.model;
 import lombok.*;
 
 
@@ -8,8 +8,12 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class Record {
+
     private int id;
+
     private String name;
+
     private String description;
+
     private String link;
 }

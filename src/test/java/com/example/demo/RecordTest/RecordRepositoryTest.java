@@ -2,7 +2,7 @@ package com.example.demo.RecordTest;
 import com.example.demo.repository.RecordRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import com.example.demo.Model.Record;
+import com.example.demo.model.Record;
 import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 

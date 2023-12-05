@@ -1,5 +1,5 @@
 package com.example.demo.repository;
-import com.example.demo.Model.Record;
+import com.example.demo.model.Record;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;

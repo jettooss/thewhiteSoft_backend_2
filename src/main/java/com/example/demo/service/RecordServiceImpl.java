@@ -1,8 +1,9 @@
 package com.example.demo.service;
+import com.example.demo.exception.NotFoundException;
 import com.example.demo.service.argument.CreateArgument;
 import com.example.demo.service.argument.UpdateArgument;
 import com.example.demo.repository.RecordRepository;
-import com.example.demo.Model.Record;
+import com.example.demo.model.Record;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,7 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public Record create(CreateArgument argument) {
+
         Record rating = Record.builder()
                 .name(argument.getName())
                 .description(argument.getDescription())
@@ -56,6 +58,10 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public Record searchByID(Integer id) {
-        return repository.getRecordById(id);
+        Record record = repository.getRecordById(id);
+        if (record == null) {
+            throw new NotFoundException("Record не найдено с ID: " + id);
+        }
+        return record;
     }
 }

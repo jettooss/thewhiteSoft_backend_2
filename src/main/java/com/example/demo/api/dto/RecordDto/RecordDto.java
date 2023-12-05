@@ -1,4 +1,4 @@
-package com.example.demo.Api.dto.RecordDto;
+package com.example.demo.api.dto.RecordDto;
 import lombok.*;
 
 

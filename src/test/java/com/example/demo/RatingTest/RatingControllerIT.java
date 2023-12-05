@@ -1,8 +1,10 @@
 package com.example.demo.RatingTest;
-import com.example.demo.Api.dto.Ratingdto.RatingCreateDto;
-import com.example.demo.Api.dto.Ratingdto.RatingDto;
-import com.example.demo.Model.Rating;
+import com.example.demo.api.dto.Ratingdto.RatingCreateDto;
+import com.example.demo.api.dto.Ratingdto.RatingDto;
+import com.example.demo.model.Rating;
+import com.example.demo.model.Record;
 import com.example.demo.service.RatingService;
+import com.example.demo.service.RecordService;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.MethodOrderer;
@@ -26,23 +28,24 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class RatingControllerIT {
 
-
     @Autowired
     private WebTestClient webTestClient;
 
     @Autowired
     private RatingService ratingService;
 
+    @Autowired
+    private RecordService recordService;
 
     @Test
     @Order(1)
     void testCreateRating(SoftAssertions assertions) {
-
         // Arrange
+        Record record = recordService.searchByID(3);
         RatingCreateDto ratingCreateDto = RatingCreateDto.builder()
                 .value(5)
                 .comment("Great!")
-                .recordId(3)
+                .recordId(record.getId())
                 .build();
 
         // Act
@@ -54,8 +57,7 @@ class RatingControllerIT {
                 .expectStatus().isOk();
 
         // Assert
-        List<Rating> ratings = ratingService.getRatingsById(1);
-        System.out.println(ratings);
+        List<Rating> ratings = ratingService.getRatingsByRecordId(record.getId());
         assertions.assertThat(ratings).hasSize(1);
         assertions.assertThat(ratings.get(0).getValue()).isEqualTo(5);
         assertions.assertThat(ratings.get(0).getComment()).isEqualTo("Great!");
@@ -64,21 +66,8 @@ class RatingControllerIT {
     @Test
     @Order(2)
     void testGetRatingsByRecordId(SoftAssertions assertions) {
+        Record record = recordService.searchByID(3);
 
-        // Arrange
-        RatingCreateDto ratingCreateDto = RatingCreateDto.builder()
-                .value(5)
-                .comment("Great!")
-                .recordId(3)
-                .build();
-
-        // Act
-        webTestClient.post()
-                .uri("/api/ratings/create")
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(ratingCreateDto)
-                .exchange()
-                .expectStatus().isOk();
 
         List<RatingDto> responseDtoList = webTestClient.get()
                 .uri("/api/ratings/list-by-record?recordId=3")
@@ -90,35 +79,22 @@ class RatingControllerIT {
         // Assert
         assertions.assertThat(responseDtoList)
                 .extracting("value", "comment", "recordId")
-                .contains(tuple(5, "Great!", 3));
+                .contains(tuple(5, "Great!", record.getId()));
     }
 
     @Test
     @Order(3)
     void testDeleteRating(SoftAssertions assertions) {
-        // Arrange
-        RatingDto ratingCreateDto = RatingDto.builder()
-                .id(1)
-                .value(5)
-                .comment("Great!")
-                .recordId(3)
-                .build();
-        webTestClient.post()
-                .uri("/api/ratings/create")
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(ratingCreateDto)
-                .exchange()
-                .expectStatus().isOk();
 
         // Act
         webTestClient.delete()
-                .uri("/api/ratings/{id}/delete", ratingCreateDto.getId())
+                .uri("/api/ratings/{id}/delete",3)
                 .exchange()
                 .expectStatus().isOk();
 
         // Assert
-        List<Rating> ratingsAfterDelete = ratingService.getRatingsById(ratingCreateDto.getId());
+        List<Rating> ratingsAfterDelete = ratingService.getRatingsById(3);
         assertThat(ratingsAfterDelete).isEmpty();
     }
-
 }
+

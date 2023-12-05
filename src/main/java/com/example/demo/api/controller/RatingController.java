@@ -1,11 +1,11 @@
-package com.example.demo.Api.controller;
-import com.example.demo.Api.dto.Ratingdto.RatingCreateDto;
-import com.example.demo.Api.dto.Ratingdto.RatingDto;
-import com.example.demo.Api.mapper.RatingMapper;
-import com.example.demo.Action.RatingAction;
-import com.example.demo.Model.Rating;
+package com.example.demo.api.controller;
+import com.example.demo.action.CreateRatingAction;
+import com.example.demo.action.argument.CreateRatingActionArgument;
+import com.example.demo.api.dto.Ratingdto.RatingCreateDto;
+import com.example.demo.api.dto.Ratingdto.RatingDto;
+import com.example.demo.api.mapper.RatingMapper;
+import com.example.demo.model.Rating;
 import com.example.demo.service.RatingService;
-import com.example.demo.service.argument.Rating.RatingCreateArgument;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,15 +21,13 @@ public class RatingController {
 
     private final RatingService ratingService;
     private final RatingMapper ratingMapper;
-    private final RatingAction ratingAction;
+    private final CreateRatingAction ratingAction;
 
     @PostMapping("/create")
     @Operation(description = "Создать запись")
-    public RatingDto  create( @Valid @RequestBody RatingCreateDto dto) {
-
-        RatingCreateArgument argument = ratingMapper.toCreateArgument(dto);
-
-        Rating createdRating = ratingAction.create(argument);
+    public RatingDto create(@Valid @RequestBody RatingCreateDto dto) {
+        CreateRatingActionArgument argument = ratingMapper.toCreateArgument(dto);
+        Rating createdRating = ratingAction.getExisting(argument);
         return ratingMapper.toRatingResponseDto(createdRating);
     }
 

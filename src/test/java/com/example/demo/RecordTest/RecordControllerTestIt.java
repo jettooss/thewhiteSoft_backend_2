@@ -1,7 +1,7 @@
 package com.example.demo.RecordTest;
-import com.example.demo.Api.dto.RecordDto.RecordCreateDto;
-import com.example.demo.Api.dto.RecordDto.RecordDto;
-import com.example.demo.Api.dto.RecordDto.RecordUpdateDto;
+import com.example.demo.api.dto.RecordDto.RecordCreateDto;
+import com.example.demo.api.dto.RecordDto.RecordDto;
+import com.example.demo.api.dto.RecordDto.RecordUpdateDto;
 import com.example.demo.service.RecordService;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;

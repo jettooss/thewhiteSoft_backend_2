@@ -1,4 +1,5 @@
 package com.example.demo.RecordTest;
+import com.example.demo.model.Record;
 import com.example.demo.service.argument.CreateArgument;
 import com.example.demo.service.argument.UpdateArgument;
 import com.example.demo.repository.RecordRepository;
@@ -8,7 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import com.example.demo.Model.Record;
+import com.example.demo.model.Record;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +33,13 @@ public class RecordServiceTest {
     void testCreateRecord() {
         // Arrange
         CreateArgument createArgument = new CreateArgument("TestName", "TestDescription", "TestLink");
-        Record createdRecord = Record.builder().name("TestName").description("TestDescription").link("TestLink").build();
+        Record createdRecord = Record
+                                    .builder()
+                                    .name("TestName")
+                                    .description("TestDescription")
+                                    .link("TestLink")
+                                    .build();
+
         when(repository.save(any())).thenReturn(createdRecord);
 
         // Act
@@ -51,7 +58,13 @@ public class RecordServiceTest {
         // Arrange
         Integer recordId = 1;
         UpdateArgument updateArgument = new UpdateArgument("UpdatedName", "UpdatedDescription", "UpdatedLink");
-        Record existingRecord = Record.builder().id(recordId).name("OldName").description("OldDescription").link("OldLink").build();
+        Record existingRecord = Record
+                                    .builder()
+                                    .id(recordId)
+                                    .name("OldName")
+                                    .description("OldDescription")
+                                    .link("OldLink")
+                                    .build();
         when(repository.getRecordById(recordId)).thenReturn(existingRecord);
 
         // Act
@@ -93,7 +106,6 @@ public class RecordServiceTest {
         recordService.deleteRecord(recordId);
 
         // Assert
-//        assertTrue(result);
         verify(repository, times(1)).deleteById(recordId);
     }
 
@@ -101,7 +113,20 @@ public class RecordServiceTest {
     void testGetAllRecords() {
         // Arrange
         String name = "TestName";
-        List<Record> records = Arrays.asList(Record.builder().name(name).description("Desc1").link("Link1").build(), Record.builder().name(name).description("Desc2").link("Link2").build());
+        List<Record> records = Arrays.asList(
+                Record.builder()
+                        .name(name)
+                        .description("Desc1")
+                        .link("Link1")
+                        .build(),
+
+                Record.builder()
+                        .name(name)
+                        .description("Desc2")
+                        .link("Link2")
+                        .build()
+        );
+
         when(repository.getRecordsByName(name)).thenReturn(records);
 
         // Act
@@ -117,7 +142,14 @@ public class RecordServiceTest {
     void testSearchByID() {
         // Arrange
         Integer recordId = 1;
-        Record record = Record.builder().id(recordId).name("TestName").description("TestDescription").link("TestLink").build();
+        Record record = Record
+                            .builder()
+                            .id(recordId)
+                            .name("TestName")
+                            .description("TestDescription")
+                            .link("TestLink")
+                            .build();
+
         when(repository.getRecordById(recordId)).thenReturn(record);
 
         // Act

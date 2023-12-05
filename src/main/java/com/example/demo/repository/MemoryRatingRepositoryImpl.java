@@ -1,5 +1,5 @@
 package com.example.demo.repository;
-import com.example.demo.Model.Rating;
+import com.example.demo.model.Rating;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +13,7 @@ public class MemoryRatingRepositoryImpl implements RatingRepository {
 
     @Override
     public Rating save(Rating rating) {
+
         int id = getNextId();
         rating.setId(id);
         ratings.put(id, rating);
@@ -41,6 +42,7 @@ public class MemoryRatingRepositoryImpl implements RatingRepository {
 
     @Override
     public int getNextId() {
+
         int maxId = ratings.keySet().stream()
                 .max(Integer::compareTo)
                 .orElse(0);

@@ -8,7 +8,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 public class CreateArgument {
-    String name;
-    String description;
-    String link;
+
+    private String name;
+    private String description;
+    private String link;
 }

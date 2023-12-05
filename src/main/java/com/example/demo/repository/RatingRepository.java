@@ -1,5 +1,5 @@
 package com.example.demo.repository;
-import com.example.demo.Model.Rating;
+import com.example.demo.model.Rating;
 import java.util.List;
 
 public interface RatingRepository {
