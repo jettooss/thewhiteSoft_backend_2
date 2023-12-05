@@ -150,7 +150,7 @@ public class RecordServiceTest {
         when(repository.getRecordById(recordId)).thenReturn(record);
 
         // Act
-        Record result = recordService.searchByID(recordId);
+        Record result = recordService.getExisting(recordId);
 
         // Assert
         assertNotNull(result);

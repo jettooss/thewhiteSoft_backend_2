@@ -17,7 +17,7 @@ public class CreateRatingAction {
 
     public Rating execute(CreateRatingActionArgument argument) {
 
-        Record getExisting = recordService.searchByID(argument.getRecordId());
+        Record getExisting = recordService.getExisting(argument.getRecordId());
 
         CreateRatingActionArgument rating = CreateRatingActionArgument.builder()
                                                                       .value(argument.getValue())

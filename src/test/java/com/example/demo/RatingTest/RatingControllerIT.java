@@ -41,7 +41,7 @@ class RatingControllerIT {
     @Order(1)
     void testCreateRating(SoftAssertions assertions) {
         // Arrange
-        Record record = recordService.searchByID(3);
+        Record record = recordService.getExisting(3);
         RatingCreateDto ratingCreateDto = RatingCreateDto.builder()
                 .value(5)
                 .comment("Great!")
@@ -66,7 +66,7 @@ class RatingControllerIT {
     @Test
     @Order(2)
     void testGetRatingsByRecordId(SoftAssertions assertions) {
-        Record record = recordService.searchByID(3);
+        Record record = recordService.getExisting(3);
 
 
         List<RatingDto> responseDtoList = webTestClient.get()

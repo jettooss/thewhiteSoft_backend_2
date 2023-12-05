@@ -57,7 +57,7 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public Record searchByID(Integer id) {
+    public Record getExisting(Integer id) {
         Record record = repository.getRecordById(id);
         if (record == null) {
             String.format("Запись с идентификатором %s не найдена", id);

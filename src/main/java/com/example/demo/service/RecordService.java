@@ -14,6 +14,6 @@ public interface RecordService {
 
     List<Record> getAll(String name);
 
-    Record searchByID(Integer id);
+    Record getExisting(Integer id);
 
 }

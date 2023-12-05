@@ -41,7 +41,7 @@ public class CreateRatingActionTest {
         Record createRecord = mock(Record.class);
         when(createRecord.getId()).thenReturn(1);
 
-        when(recordService.searchByID(1)).thenReturn(createRecord);
+        when(recordService.getExisting(1)).thenReturn(createRecord);
 
         Rating createdRating = mock(Rating.class);
         when(createdRating.getId()).thenReturn(1);

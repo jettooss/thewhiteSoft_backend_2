@@ -77,7 +77,7 @@ class RecordControllerIT {
                 .expectStatus();
 
         // Assert
-        assertions.assertThat(recordService.searchByID(1)).isNull();
+        assertions.assertThat(recordService.getExisting(1)).isNull();
     }
 
 
